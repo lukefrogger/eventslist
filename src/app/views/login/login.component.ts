@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   signInWithFacebook() {
     this.authService.signInWithFacebook()
-    .then((res) => { 
+    .then(
+      (res) => { 
         this.router.navigate(['dashboard'])
       })
     .catch((err) => console.log(err));
