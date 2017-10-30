@@ -17,9 +17,7 @@ export class AuthService {
       (user) => {
         if(user) {
           this.userDetails = user;
-          console.log(this.userDetails);
-        }
-        else {
+        } else {
           this.userDetails = null;
         }
       }

@@ -1,5 +1,7 @@
+import { UserApiService } from './services/user-api.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule } from "@angular/http";
 
 import { AppRoutes } from "./app.routes";
 
@@ -25,9 +27,10 @@ import { AuthService } from './services/auth.service';
     AppRoutes,
     AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, UserApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
