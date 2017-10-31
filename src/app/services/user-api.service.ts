@@ -5,19 +5,21 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class UserApiService {
 
-  private headers = new Headers({ 'Content-Type': 'application/json', 'charset': 'UTF-8' });
+  public userAccessToken: String = '';
+
+  private headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
   private options = new RequestOptions({ headers: this.headers });
 
   constructor(private http: Http) {
 
   }
 
-  signIntoSalesforce(email, callback){
+  signIntoSalesforce(email){
     console.log(email);
     let params = new URLSearchParams();
     params.set('id', email);
-    return this.http.get(`login`, {search:params}).map((response: any) => {
-      return response.json();
+    return this.http.post(`login`, params, this.options).map((response: any) => {
+      return response;
     })
   }
 
