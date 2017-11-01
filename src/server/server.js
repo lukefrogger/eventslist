@@ -18,6 +18,7 @@ app.use(morgan('dev'));
 
 const PASS = 'adventure3';
 const USERNAME = 'luke@campeagle.org.devbox';
+const BASEURL = 'https://cs67.salesforce.com/services/';
 
 // if(process.env.NODE_ENV.trim() == 'production'){
 // 	var ENDPOINT = 'https://campeagle.secure.force.com/authTest/services/apexrest/authTest';
@@ -29,24 +30,40 @@ const USERNAME = 'luke@campeagle.org.devbox';
 app.post('/login', function (req, res) {
     var headers = {"Content-Type": "application/x-www-form-urlencoded"};
     var form = {
-      grant_type: 'password',
-      client_id: '3MVG99E3Ry5mh4zqNsp6HovAR3hPPB176Hzuc8wcTLed_3YNXIxSkSkLZ7UqmJA8DpMbmDwAzfsaQlNWsDkB4',
-      client_secret: '1217469309399725886',
-      username: USERNAME,
-      password: PASS
+        grant_type: 'password',
+        client_id: '3MVG99E3Ry5mh4zqNsp6HovAR3hPPB176Hzuc8wcTLed_3YNXIxSkSkLZ7UqmJA8DpMbmDwAzfsaQlNWsDkB4',
+        client_secret: '1217469309399725886',
+        username: USERNAME,
+        password: PASS
     };
 
-    request.post('https://cs67.salesforce.com/services/oauth2/token', {headers: headers, form: form},
-      function (error, response) {
-        if (!error && response.statusCode === 200) {
-            res.send(response);
-        } else if (error) {
-            res.send(JSON.parse(error));
-        } else {
-            res.sendStatus(JSON.parse(response.statusCode));
+    request.post(BASEURL+'oauth2/token', {headers: headers, form: form},
+        function (error, response) {
+            if (!error && response.statusCode === 200) {
+                res.send(response);
+            } else if (error) {
+                res.send(JSON.parse(error));
+            } else {
+                res.sendStatus(JSON.parse(response.statusCode));
+            }
         }
-      }
     );
+});
+
+app.get('/events', function (req, res) {
+    var headers = {'Authorization': 'OAuth ' + req.query.token};
+    var sfUrl = BASEURL+"data/v37.0/query?q=SELECT+id,name,Arrival__c,Program__c,Public_Name__c,StageName,RecordType.Name+FROM+opportunity+LIMIT+50";    
+    request.get(sfUrl, {headers: headers},
+        function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                res.send(response);
+            } else if (error) {
+                res.send(JSON.parse(error));
+            } else {
+                res.sendStatus(JSON.parse(response.statusCode));
+            }
+        }
+    )
 });
 
 // all other routes are handled by Angular

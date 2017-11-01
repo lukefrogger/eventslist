@@ -20,17 +20,34 @@
           <li class="navbar-right" (click)="logout()"><a>Logout</a></li>
         </ul>
         
-      </div><!--/.nav-collapse -->
-    </div><!--/.container-fluid -->
+      </div>
+    </div>
   </nav>
 
-  <!-- Main component for a primary marketing message or call to action -->
   <div class="jumbotron">
     <h1>Welcome to Dashboard</h1>
     <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
     <p>
-      <a class="btn btn-lg btn-primary" href="" role="button">Hello</a>
+      <a class="btn btn-lg btn-primary" (click)="logout()" role="button">Hello</a>
     </p>
   </div>
 
-</div> <!-- /container -->
+  <h3>{{title}}</h3>
+
+  <div class="form-group">
+    <ul>
+      <li>{{singleEvent.Name}}</li>
+      <li>{{singleEvent.Program__c}}</li>
+      <li>{{singleEvent.Arrival__}}c</li>
+    </ul>
+  </div>
+
+  <div *ngFor="let e of eventsList" class="form-group">
+    <ul>
+      <li>{{e.Name}}</li>
+      <li>{{e.Program__c}}</li>
+      <li>{{e.Arrival__}}c</li>
+    </ul>
+  </div>
+
+</div> 

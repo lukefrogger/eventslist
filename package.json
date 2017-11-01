@@ -4,13 +4,11 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "set NODE_ENV=production && node src/server/server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev": "set NODE_ENV=test && node src/server/server.js",
-    "postinstall": "ng build --prod"
+    "dev": "node src/server/server.js"
   },
   "private": true,
   "dependencies": {

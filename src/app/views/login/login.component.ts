@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   signInWithFacebook() {
     this.authService.signInWithFacebook().then(
       (res) => { 
-        this.loginToSF(res.email);
+        this.loginToSF(res.user.email);
       })
     .catch((err) => console.log(err));
   }
@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
   loginToSF(email){
     this.userApi.signIntoSalesforce(email).subscribe(
       (success) => {
-        console.log(success);
         let responseBody = JSON.parse(success.json().body);     
         this.userApi.userAccessToken = responseBody.access_token;
         this.enterApp();
